@@ -14,3 +14,7 @@
 *.db
 *.sdf
 *.VC.db
+*.opensdf
+
+# Don't ignore files in build
+!Build/**/*.ico
