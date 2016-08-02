@@ -1,5 +1,16 @@
+# Unreal Gernated Files #
+#########################
 */Build
 */Binaries
 */DerivedDataCache
-*/Intermediate/
+*/Intermediate
 */Saved
+*/Content/StarterContetnt
+
+
+# VC Genterated Files #
+#######################
+
+*.db
+*.sdf
+*.VC.db
