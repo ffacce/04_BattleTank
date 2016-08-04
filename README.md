@@ -8,7 +8,7 @@ BT03 기본 level 작업 landscpe 기본 추가
 
 
 
-```markdown
+```mermaid
 graph TD;
     A-->B;
     A-->C;
