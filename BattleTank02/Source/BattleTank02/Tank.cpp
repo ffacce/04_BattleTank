@@ -23,6 +23,7 @@ void ATank::BeginPlay()
 void ATank::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+	
 
 }
 
@@ -30,11 +31,54 @@ void ATank::Tick( float DeltaTime )
 void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
-	UE_LOG(LogTemp, Warning, TEXT("SetupPlayerInputComponent Called"));
-	InputComponent->BindAction("Turret_ClockWise", IE_Pressed, this, &ATank::RotateCW);
-	InputComponent->BindAction("Turret_CounterclockWise", IE_Pressed, this, &ATank::RotateCCW);
+	//UE_LOG(LogTemp, Warning, TEXT("SetupPlayerInputComponent Called"));
+	//InputComponent->BindAction("Turret_ClockWise", IE_Pressed, this, &ATank::RotateCW);
+	//InputComponent->BindAction("Turret_CounterclockWise", IE_Pressed, this, &ATank::RotateCCW);
+
+
+	InputComponent->BindAxis("Rotate_Turret", this, &ATank::RotateTurret);
+	InputComponent->BindAxis("Elevate_Turret", this, &ATank::ElevateBarrel);
+
+	InputComponent->BindAxis("Move_Tank", this, &ATank::MoveTank);
+	InputComponent->BindAxis("Roate_Tank", this, &ATank::RotateTank);
 }
 
+void ATank::MoveTank(float speed)
+{
+	//GetWorld()->DeltaTimeSeconds;
+	if (!Turret) { return; }
+	float Distance = GetWorld()->DeltaTimeSeconds * speed * MoviementSpeed;
+	Tank->AddRelativeLocation(Tank->GetForwardVector() * Distance);
+
+}
+
+void ATank::RotateTank(float speed)
+{
+	if (!Turret) { return; }
+	float Rotation = GetWorld()->DeltaTimeSeconds * speed * RotatationSpeed;
+	//UE_LOG(LogTemp, Warning, TEXT("RotateTurrent Called"));
+	Tank->AddRelativeRotation(FRotator(0.0, Rotation, 0.0));
+}
+
+void ATank::RotateTurret(float speed)
+{
+	if (!Turret) { return; }
+	float Rotation = GetWorld()->DeltaTimeSeconds * speed * RotatationSpeed;
+	//UE_LOG(LogTemp, Warning, TEXT("RotateTurrent Called"));
+	Turret->AddRelativeRotation(FRotator(0.0, Rotation, 0.0));
+}
+
+
+void ATank::ElevateBarrel(float speed)
+{
+	if (!Barrel) { return; }
+	float Rotation = GetWorld()->DeltaTimeSeconds * speed * RotatationSpeed;
+	//UE_LOG(LogTemp, Warning, TEXT("RotateTurrent Called"));
+	Barrel->AddRelativeRotation(FRotator(Rotation, 0.0, 0.0));
+}
+
+
+/*
 void ATank::RotateCW()
 {
 	UE_LOG(LogTemp, Warning, TEXT("RotateTurrent Called"));
@@ -47,13 +91,32 @@ void ATank::RotateCCW()
 	UE_LOG(LogTemp, Warning, TEXT("RotateTurrent Called"));
 	Turret->SetRelativeRotation(FRotator(0.0, -45.F, 0.0));
 }
+*/
 
-
-void ATank::SetTurretChildActor(UChildActorComponent * TurrentFromBP)
+void ATank::SetTankChildActor(UChildActorComponent * TankFromBP)
 {
-	UE_LOG(LogTemp, Warning, TEXT("SetTurretChildActor Called"));
 
-	Turret = TurrentFromBP;
+	//UE_LOG(LogTemp, Warning, TEXT("SetTankChildActor Called"));
+	if (!TankFromBP) { return; }
+	Tank = TankFromBP;
+
+}
+
+void ATank::SetTurretChildActor(UChildActorComponent * TurretFromBP)
+{
+	
+	//UE_LOG(LogTemp, Warning, TEXT("SetTurretChildActor Called"));
+	if (!TurretFromBP) { return;  }
+	Turret = TurretFromBP;
+
+}
+
+void ATank::SetBarrelChildActor(UChildActorComponent * BarrelFromBP)
+{
+
+	//UE_LOG(LogTemp, Warning, TEXT("SetBarrelChildActor Called"));
+	if (!BarrelFromBP) { return; }
+	Barrel = BarrelFromBP;
 
 }
 
