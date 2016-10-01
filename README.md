@@ -21,3 +21,5 @@ BT03 기본 level 작업 landscpe 기본 추가
 * child actor component
 * InputComponet
 
+* 다음은 X:\tutorial_collective\Udemy - Learn to Code in C++ by Developing Your First Game [May 30th 2016 Update]
+
